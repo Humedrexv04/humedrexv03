@@ -1,0 +1,9 @@
+/* You can add global styles to this file, and also import other style files */
+/* styles.css */
+ion-item {
+    --highlight-color-focused: #40916c;
+}
+
+ion-input {
+    --highlight-color-focused: #40916c;
+}

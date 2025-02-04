@@ -1,0 +1,26 @@
+<ion-header>
+    <ion-toolbar>
+        <ion-title>Detalles de la Planta</ion-title>
+    </ion-toolbar>
+</ion-header>
+
+<ion-content>
+    <ion-card *ngIf="plant"> <!-- Cambia plantDetails a plant -->
+        <ion-card-header>
+            <ion-card-title>{{ plant.name }}</ion-card-title> <!-- Cambia plantDetails a plant -->
+            <ion-card-subtitle>{{ plant.horario }}</ion-card-subtitle> <!-- Cambia plantDetails a plant -->
+        </ion-card-header>
+        <ion-card-content>
+            <img [src]="plant.img" alt="{{ plant.name }}" /> <!-- Cambia plantDetails a plant -->
+            <p>Humedad: {{ plant.humedad }}%</p> <!-- Cambia plantDetails a plant -->
+        </ion-card-content>
+    </ion-card>
+
+    <ion-button expand="full" color="danger" (click)="deletePlant()">
+        Eliminar Planta
+    </ion-button>
+
+    <ion-button expand="full" (click)="goToPlantList()">
+        Volver a la Lista de Plantas
+    </ion-button>
+</ion-content>

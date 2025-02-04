@@ -1,0 +1,118 @@
+<ion-content [fullscreen]="true" class="theme-background">
+  <br>
+  <br>
+  <br>
+  <br>
+  <div class="main-container">
+
+    <br>
+    <br>
+    <!-- Estado de carga -->
+    <div *ngIf="loading" class="loading-state">
+      <div class="hydro-loader">
+        <div class="loader-bubble"></div>
+        <ion-spinner name="crescent" class="hydro-spinner"></ion-spinner>
+        <p class="loading-text">Conectando con los sensores...</p>
+      </div>
+    </div>
+
+    <!-- Contenido principal -->
+    <div *ngIf="!loading" class="content-wrapper">
+
+      <!-- Encabezado -->
+      <div class="header-section">
+        <h1 class="app-title">HydroMonitor</h1>
+        <p class="app-subtitle">Sistema de Monitoreo Inteligente</p>
+      </div>
+
+      <!-- Tarjetas de datos -->
+      <div class="data-panel">
+        <div class="data-card soil-card" *ngIf="humedad !== null">
+          <div class="card-content">
+            <div class="card-icon">
+              <ion-icon name="water-outline" class="soil-icon"></ion-icon>
+            </div>
+            <div class="card-info">
+              <h2>{{ humedad | number:'1.1-1' }}%</h2>
+              <p class="card-label">Humedad del suelo</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="data-card tank-card" *ngIf="volumen !== null">
+          <div class="card-content">
+            <div class="card-icon">
+              <ion-icon name="beaker-outline" class="tank-icon"></ion-icon>
+            </div>
+            <div class="card-info">
+              <h2>{{ volumen | number:'1.0-0' }}%</h2>
+              <p class="card-label">Nivel del tanque</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Visualización del tanque -->
+      <div class="hydro-visualization">
+        <div class="tank-container">
+          <div class="tank-glass">
+            <div class="water-fill" [ngStyle]="{'height.%': volumen}" [ngClass]="getWaterColor(volumen)">
+              <div class="water-reflection"></div>
+            </div>
+            <div class="tank-overlay"></div>
+
+            <!-- Escala de niveles -->
+            <div class="tank-scale">
+              <div class="scale-mark" *ngFor="let mark of scaleMarks">
+                <div class="mark-line"></div>
+                <span class="mark-label">{{ mark }}%</span>
+              </div>
+            </div>
+
+            <!-- Indicador central -->
+            <div class="tank-indicator">
+              <div class="hydro-emoji-container" [ngClass]="getWaterColor(volumen)">
+                <span class="hydro-emoji">{{ getWaterFace(volumen) }}</span>
+              </div>
+              <div class="hydro-percentage">
+                {{ volumen | number:'1.0-0' }}%
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Panel de estado -->
+      <div class="sensor-status-container">
+        <div class="status-card connection-status">
+          <ion-icon name="wifi" class="status-icon"></ion-icon>
+          <div class="status-info">
+            <p class="status-label">Estado de conexión</p>
+            <p class="status-value">{{ isConnected ? 'Conectado' : 'Desconectado' }}</p>
+          </div>
+        </div>
+
+        <div class="status-card last-update">
+          <ion-icon name="time-outline" class="status-icon"></ion-icon>
+          <div class="status-info">
+            <p class="status-label">Última actualización</p>
+            <p class="status-value">{{ lastUpdate | date:'HH:mm:ss' }}</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Mensaje de autenticación -->
+    <div *ngIf="!userId && !loading" class="auth-message">
+      <ion-icon name="lock-closed" class="auth-icon"></ion-icon>
+      <p class="auth-text">Inicia sesión para acceder a los datos</p>
+    </div>
+
+    <!-- Burbujas decorativas -->
+    <div class="floating-bubbles">
+      <div class="bubble bubble-1"></div>
+      <div class="bubble bubble-2"></div>
+      <div class="bubble bubble-3"></div>
+    </div>
+  </div>
+</ion-content>

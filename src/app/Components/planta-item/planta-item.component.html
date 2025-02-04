@@ -1,0 +1,9 @@
+<ion-card (click)="viewPlantDetails()">
+  <ion-card-header>
+    <ion-card-title>{{ plant.name }}</ion-card-title>
+  </ion-card-header>
+  <ion-card-content>
+    <img [src]="plant.img" alt="{{ plant.name }}" />
+    <ion-button expand="full" color="danger" (click)="deletePlant()">Eliminar Planta</ion-button>
+  </ion-card-content>
+</ion-card>

@@ -1,0 +1,345 @@
+/* cant.component.scss */
+:root {
+  --primary-blue: #3498db;
+  --dark-blue: #2c3e50;
+  --aqua-green: #00cec9;
+  --emerald: #2ecc71;
+  --alert-red: #e74c3c;
+  --soft-yellow: #f1c40f;
+  --background-gradient: linear-gradient(135deg, #f8fbff 0%, #e6f4ff 100%);
+  --card-shadow: 0 8px 32px rgba(50, 50, 93, 0.08);
+}
+
+.theme-background {
+  --background: var(--background-gradient);
+}
+
+/* Estructura principal */
+.main-container {
+  padding: 2rem 1.5rem;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Estado de carga */
+.loading-state {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  .hydro-loader {
+    text-align: center;
+    position: relative;
+
+    .loader-bubble {
+      width: 120px;
+      height: 120px;
+      background: rgba(var(--primary-blue), 0.1);
+      border-radius: 50%;
+      animation: pulse 2s infinite;
+    }
+
+    .hydro-spinner {
+      width: 4rem;
+      height: 4rem;
+      color: var(--primary-blue);
+    }
+
+    .loading-text {
+      margin-top: 1.5rem;
+      color: var(--dark-blue);
+      font-weight: 600;
+    }
+  }
+}
+
+/* Tarjetas de datos */
+.data-panel {
+  display: grid;
+  gap: 1.5rem;
+  margin-bottom: 3rem;
+
+  .data-card {
+    background: rgba(255, 255, 255, 0.95);
+    border-radius: 20px;
+    padding: 1.5rem;
+    backdrop-filter: blur(5px);
+    box-shadow: var(--card-shadow);
+    transition: transform 0.3s ease;
+
+    &:hover {
+      transform: translateY(-3px);
+    }
+
+    .card-content {
+      display: flex;
+      align-items: center;
+
+      .card-icon {
+        background: var(--primary-blue);
+        border-radius: 15px;
+        padding: 1rem;
+        margin-right: 1.5rem;
+        box-shadow: 0 4px 12px rgba(52, 152, 219, 0.3);
+
+        ion-icon {
+          font-size: 2rem;
+          color: white;
+        }
+      }
+
+      .card-info {
+        h2 {
+          margin: 0;
+          font-size: 2rem;
+          color: var(--dark-blue);
+        }
+
+        .card-label {
+          color: #7f8c8d;
+          font-size: 0.95rem;
+        }
+      }
+    }
+  }
+}
+
+/* Tanque de agua */
+.hydro-visualization {
+  flex: 1;
+  position: relative;
+
+  .tank-container {
+    max-width: 320px;
+    margin: 0 auto;
+    position: relative;
+
+    .tank-glass {
+      background: rgba(255, 255, 255, 0.9);
+      border-radius: 30px;
+      height: 450px;
+      box-shadow:
+        0 20px 40px rgba(0, 0, 0, 0.1),
+        inset 0 -10px 20px rgba(0, 0, 0, 0.05);
+      position: relative;
+      overflow: hidden;
+      backdrop-filter: blur(5px);
+
+      .water-fill {
+        position: absolute;
+        bottom: 0;
+        width: 100%;
+        transition: all 1s cubic-bezier(0.4, 0, 0.2, 1);
+
+        &::after {
+          content: '';
+          position: absolute;
+          top: -15px;
+          left: -5%;
+          width: 110%;
+          height: 40px;
+          background: rgba(255, 255, 255, 0.4);
+          border-radius: 40%;
+          animation: wave 3s infinite linear;
+        }
+
+        .water-reflection {
+          position: absolute;
+          top: 10%;
+          left: 0;
+          right: 0;
+          height: 50px;
+          background: linear-gradient(to bottom,
+              rgba(255, 255, 255, 0.5) 0%,
+              rgba(255, 255, 255, 0.2) 100%);
+        }
+      }
+    }
+  }
+}
+
+/* Escala de medición */
+.tank-scale {
+  position: absolute;
+  left: -40px;
+  top: 0;
+  bottom: 0;
+  width: 40px;
+
+  .scale-mark {
+    position: absolute;
+    width: 100%;
+
+    .mark-line {
+      width: 15px;
+      height: 2px;
+      background: var(--dark-blue);
+      opacity: 0.3;
+    }
+
+    .mark-label {
+      position: absolute;
+      left: 22px;
+      top: -10px;
+      font-size: 0.85rem;
+      color: var(--dark-blue);
+    }
+
+    
+  }
+}
+
+/* Indicador central */
+.tank-indicator {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 2;
+  text-align: center;
+
+  .hydro-emoji-container {
+    background: rgba(255, 255, 255, 0.95);
+    border-radius: 50%;
+    width: 100px;
+    height: 100px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 12px 30px rgba(0, 0, 0, 0.15);
+    animation: float 3s ease-in-out infinite;
+
+    .hydro-emoji {
+      font-size: 4rem;
+      filter: drop-shadow(2px 2px 3px rgba(0, 0, 0, 0.1));
+    }
+  }
+
+  .hydro-percentage {
+    margin-top: 1.2rem;
+    font-size: 2.5rem;
+    font-weight: 800;
+    color: var(--dark-blue);
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+  }
+}
+
+/* Sistema de colores para niveles */
+.red {
+  background: linear-gradient(to top,
+      #ff6b6b 0%,
+      #ff4757 100%) !important;
+}
+
+.orange {
+  background: linear-gradient(to top,
+      #ff9f43 0%,
+      #ff7f50 100%) !important;
+}
+
+.yellow {
+  background: linear-gradient(to top,
+      #fed330 0%,
+      #fdcb6e 100%) !important;
+}
+
+.lightgreen {
+  background: linear-gradient(to top,
+      #2ecc71 0%,
+      #00b894 100%) !important;
+}
+
+.green {
+  background: linear-gradient(to top,
+      #00cec9 0%,
+      #0984e3 100%) !important;
+}
+
+/* Animaciones */
+@keyframes wave {
+  0% {
+    transform: translateX(0) rotate(0deg);
+  }
+
+  50% {
+    transform: translateX(-25%) rotate(5deg);
+  }
+
+  100% {
+    transform: translateX(0) rotate(0deg);
+  }
+}
+
+@keyframes pulse {
+  0% {
+    transform: scale(0.9);
+    opacity: 0.6;
+  }
+
+  50% {
+    transform: scale(1.1);
+    opacity: 0.8;
+  }
+
+  100% {
+    transform: scale(0.9);
+    opacity: 0.6;
+  }
+}
+
+@keyframes float {
+
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+
+  50% {
+    transform: translateY(-15px);
+  }
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .main-container {
+    padding: 1.5rem 1rem;
+  }
+
+  .tank-container .tank-glass {
+    height: 380px;
+    border-radius: 25px;
+  }
+
+  .tank-indicator {
+    .hydro-emoji-container {
+      width: 80px;
+      height: 80px;
+
+      .hydro-emoji {
+        font-size: 3rem;
+      }
+    }
+
+    .hydro-percentage {
+      font-size: 2rem;
+    }
+  }
+
+  .data-card {
+    padding: 1.2rem;
+
+    .card-icon {
+      padding: 0.8rem;
+
+      ion-icon {
+        font-size: 1.8rem;
+      }
+    }
+
+    h2 {
+      font-size: 1.8rem;
+    }
+  }
+}

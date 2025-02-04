@@ -1,0 +1,15 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Inventario de Plantas</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content padding>
+  <ion-list>
+    <app-planta-item 
+      *ngFor="let plant of plants" 
+      [plant]="plant" 
+      [onDelete]="deletePlant.bind(this)">
+    </app-planta-item>
+  </ion-list>
+</ion-content>

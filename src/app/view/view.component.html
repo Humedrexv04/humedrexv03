@@ -1,0 +1,43 @@
+<ion-header>
+    <ion-toolbar class="header-toolbar">
+        <ion-button fill="clear" class="profile-button" (click)="goToProfile()">
+            <ion-icon name="person-circle" slot="icon-only"></ion-icon>
+        </ion-button>
+        <div class="header-title-container">
+            <ion-title class="header-title">🌿 Mi Jardín</ion-title>
+        </div>
+    </ion-toolbar>
+</ion-header>
+
+<ion-content>
+    <!-- Contenido principal aquí -->
+</ion-content>
+
+<ion-tabs>
+    <ion-tab-bar slot="bottom" class="custom-tab-bar">
+        <!-- Inventario - Izquierda -->
+        <ion-tab-button tab="plant-list" class="inventory-tab">
+            <div class="tab-content">
+                <ion-icon name="leaf" class="tab-icon"></ion-icon>
+                <span class="tab-label">Plantas</span>
+                <div class="plant-counter">{{ plantCount }}</div>
+            </div>
+        </ion-tab-button>
+
+        <!-- Add - Centro -->
+        <ion-tab-button tab="add" class="add-tab">
+            <div class="tab-content">
+                <ion-icon name="add-circle" class="tab-icon"></ion-icon>
+                <span class="tab-label">Agregar</span>
+            </div>
+        </ion-tab-button>
+
+        <!-- Agua - Derecha -->
+        <ion-tab-button tab="cant" class="water-tab">
+            <div class="tab-content">
+                <ion-icon name="water" class="tab-icon"></ion-icon>
+                <span class="tab-label">Riego</span>
+            </div>
+        </ion-tab-button>
+    </ion-tab-bar>
+</ion-tabs>
