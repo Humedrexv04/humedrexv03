@@ -1,0 +1,78 @@
+/* Estilos Swiper personalizados */
+.swiper-content {
+    height: 100%; /* Asegura que el ion-content ocupe todo el espacio */
+}
+
+.swiper-container {
+    width: 100%;
+    height: 100%; /* Asegura que el swiper ocupe todo el ion-content */
+    padding: 20px 0; /* Espaciado superior e inferior */
+}
+
+.swiper-wrapper {
+    display: flex; /* Asegura que los slides se alineen en una fila */
+    align-items: center;
+}
+
+.swiper-slide {
+    width: 100%; /* Ajusta el ancho de las tarjetas para ocupar todo el espacio */
+    height: 100%; /* Ajusta la altura de las tarjetas para ocupar todo el espacio */
+    display: flex; /* Para centrar el contenido dentro de la tarjeta */
+    justify-content: center; /* Centra horizontalmente el contenido */
+    align-items: center; /* Centra verticalmente el contenido */
+}
+
+.plant-item {
+    width: 100%; /* Asegura que el componente de planta ocupe todo el ancho del slide */
+    height: 100%; /* Asegura que el componente de planta ocupe toda la altura del slide */
+    display: flex; /* Para centrar el contenido dentro del componente */
+    flex-direction: column; /* Asegura que el contenido esté en columna */
+    align-items: center; /* Centra horizontalmente el contenido */
+    justify-content: center; /* Centra verticalmente el contenido */
+}
+
+/* Media Queries para pantallas más pequeñas y alargadas */
+@media (max-width: 768px) and (min-height: 600px) {
+    .swiper-slide {
+        height: 400px; /* Ajustar la altura en pantallas más pequeñas pero alargadas */
+    }
+}
+
+@media (max-width: 768px) and (max-height: 599px) {
+    .swiper-slide {
+        height: 300px; /* Ajustar la altura en pantallas más pequeñas y no tan alargadas */
+    }
+}
+
+@media (max-width: 480px) and (min-height: 600px) {
+    .swiper-slide {
+        height: 350px; /* Ajustar aún más la altura en pantallas muy pequeñas pero alargadas */
+    }
+}
+
+@media (max-width: 480px) and (max-height: 599px) {
+    .swiper-slide {
+        height: 250px; /* Ajustar aún más la altura en pantallas muy pequeñas y no tan alargadas */
+    }
+}
+
+/* Media Queries para pantallas angostas (ancho reducido) */
+@media (max-width: 360px) {
+    .swiper-container {
+        padding: 10px 0; /* Reducir el espaciado en pantallas muy angostas */
+    }
+
+    .swiper-slide {
+        height: 200px; /* Reducir la altura de los slides en pantallas angostas */
+    }
+
+    .plant-item {
+        padding: 10px; /* Añadir un poco de padding para que el contenido no se vea apretado */
+    }
+}
+
+/* Eliminar estilos antiguos del ion-list */
+ion-list {
+    background: transparent;
+    padding: 0;
+}

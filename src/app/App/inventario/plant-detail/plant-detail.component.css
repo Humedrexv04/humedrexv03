@@ -1,0 +1,38 @@
+ion-card {
+    --background: var(--card-background);
+    box-shadow: var(--card-shadow);
+    border-radius: 12px;
+    margin: 16px;
+    padding: 16px;
+}
+
+ion-card-header {
+    padding-bottom: 12px;
+}
+
+ion-card-title {
+    font-size: 1.5rem;
+    color: var(--primary-green);
+}
+
+ion-card-subtitle {
+    font-size: 1rem;
+    color: var(--text-dark);
+}
+
+ion-card-content {
+    img {
+        width: 100%;
+        border-radius: 8px;
+        margin-bottom: 12px;
+    }
+
+    p {
+        color: var(--text-dark);
+        font-size: 1rem;
+    }
+}
+
+ion-button {
+    margin: 8px 16px;
+}

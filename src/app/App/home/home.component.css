@@ -1,0 +1,37 @@
+.theme-toggle-item {
+    margin: 20px 0;
+    border-radius: 12px;
+    background: var(--card-background);
+    box-shadow: var(--card-shadow);
+
+    ion-label {
+        font-weight: 500;
+        color: var(--text-dark);
+    }
+}
+
+.theme-icon {
+    transition: transform 0.3s ease;
+    font-size: 1.8em;
+}
+
+.theme-toggle {
+    padding-right: 8px;
+
+    &::part(track) {
+        height: 28px;
+        width: 50px;
+        background: var(--accent-green);
+    }
+
+    &::part(handle) {
+        width: 24px;
+        height: 24px;
+    }
+}
+
+.logout-button {
+    margin-top: 40px;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+}

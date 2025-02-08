@@ -11,11 +11,28 @@ import { Router } from '@angular/router';
 })
 export class HomeComponent implements OnInit {
   route = inject(Router);
-  constructor(private authService: AuthService) {}
+  isDarkTheme = false;
+  constructor(private authService: AuthService) { }
+
+
 
   ngOnInit() {
     // Aquí puedes realizar cualquier inicialización necesaria
     console.log('Componente Home inicializado');
+    const savedTheme = localStorage.getItem('theme');
+    const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+
+    if (savedTheme) {
+      document.body.classList.toggle('dark-theme', savedTheme === 'dark');
+    } else {
+      document.body.classList.toggle('dark-theme', prefersDark);
+    }
+  }
+
+
+  toggleTheme() {
+    const isDark = document.body.classList.toggle('dark-theme');
+    localStorage.setItem('theme', isDark ? 'dark' : 'light');
   }
 
   logout() {

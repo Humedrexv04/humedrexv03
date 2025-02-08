@@ -1,10 +1,24 @@
+<!-- perfil.html -->
 <ion-header>
-    <ion-toolbar>
-      <ion-title>Inicio</ion-title>
-    </ion-toolbar>
-  </ion-header>
-  
-  <ion-content padding>
-    <h2>Bienvenido a la aplicación</h2>
-    <ion-button expand="full" color="danger" (click)="logout()">Cerrar Sesión</ion-button>
-  </ion-content>
+  <ion-toolbar>
+    <ion-title>Mi Perfil</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content padding>
+  <h2>Bienvenido a la aplicación</h2>
+
+  <!-- Botón de cambio de tema -->
+  <ion-item lines="none" class="theme-toggle-item">
+    <ion-icon slot="start" [name]="isDarkTheme ? 'moon' : 'sunny'" color="warning" class="theme-icon">
+    </ion-icon>
+    <ion-label>Modo {{ isDarkTheme ? 'Oscuro' : 'Claro' }}</ion-label>
+    <ion-toggle [checked]="isDarkTheme" (ionChange)="toggleTheme()" color="success" class="theme-toggle">
+    </ion-toggle>
+  </ion-item>
+
+  <!-- Botón de cerrar sesión -->
+  <ion-button expand="full" color="danger" (click)="logout()" class="logout-button">
+    Cerrar Sesión
+  </ion-button>
+</ion-content>

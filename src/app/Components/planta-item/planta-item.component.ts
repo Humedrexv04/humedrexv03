@@ -15,12 +15,6 @@ export class PlantaItemComponent {
 
   constructor(private router: Router) {}
 
-  deletePlant() {
-    if (this.plant.id) {
-      this.onDelete(this.plant.id); // Llama a la función de eliminación
-    }
-  }
-
   // Método para redirigir a la página de detalles de la planta
   viewPlantDetails() {
     if (this.plant.id) {
