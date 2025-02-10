@@ -301,6 +301,184 @@
   }
 }
 
+/* Contenedor principal centrado */
+.sensor-error-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  background-color: #f8f9fa;
+  padding: 20px;
+}
+
+/* Mensaje de error */
+.sensor-error-message {
+  text-align: center;
+  padding: 40px;
+  background-color: rgba(248, 215, 218, 0.9);
+  border-radius: 20px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+  max-width: 500px;
+  width: 100%;
+}
+
+.error-text {
+  font-size: 24px;
+  color: #721c24;
+  margin-bottom: 25px;
+  font-weight: bold;
+}
+
+
+/* Ilustración de planta mejorada */
+.sad-plant {
+  width: 180px;
+  height: 300px;
+  margin: 0 auto;
+  position: relative;
+  animation: plant-sway 3s ease-in-out infinite;
+}
+
+.plant {
+  position: relative;
+  height: 100%;
+}
+
+.stem {
+  position: absolute;
+  left: 50%;
+  bottom: 100px;
+  width: 14px;
+  height: 150px;
+  background: #78c74f;
+  transform: translateX(-50%);
+  border-radius: 8px;
+  z-index: 2;
+}
+
+.leaves {
+  position: absolute;
+  bottom: 220px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 1;
+}
+
+.leaf {
+  width: 80px;
+  height: 100px;
+  background: #8bc34a;
+  border-radius: 0 80px 0 80px;
+  position: absolute;
+  box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.leaf.left {
+  transform: rotate(20deg) translateX(-50px);
+  animation: leaf-drop-left 3s ease-in-out infinite;
+}
+
+.leaf.right {
+  transform: rotate(-20deg) translateX(50px);
+  animation: leaf-drop-right 3s ease-in-out infinite;
+}
+
+.pot {
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  width: 120px;
+  height: 90px;
+  background: #a86a3d;
+  transform: translateX(-50%);
+  border-radius: 0 0 20px 20px;
+  z-index: 3;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+}
+
+.pot:before {
+  content: '';
+  position: absolute;
+  top: -20px;
+  left: -15px;
+  right: -15px;
+  height: 30px;
+  background: #b87d4f;
+  border-radius: 12px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.face {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -30%);
+  width: 50px;
+  height: 50px;
+  z-index: 4;
+}
+
+.eye {
+  width: 10px;
+  height: 10px;
+  background: #333;
+  border-radius: 50%;
+  position: absolute;
+  animation: blink 4s infinite;
+}
+
+.eye.left { left: 8px; }
+.eye.right { right: 8px; }
+
+.mouth {
+  position: absolute;
+  bottom: 8px;
+  left: 50%;
+  width: 25px;
+  height: 10px;
+  border: 2px solid #333;
+  border-radius: 0 0 25px 25px;
+  border-top: 0;
+  transform: translateX(-50%);
+}
+
+.tear {
+  position: absolute;
+  top: 20px;
+  left: 50%;
+  width: 5px;
+  height: 15px;
+  background: #64b5f6;
+  border-radius: 3px;
+  animation: tear-drop 2s ease-out infinite;
+}
+
+/* Animaciones */
+@keyframes plant-sway {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-10px); }
+}
+
+@keyframes leaf-drop-left {
+  0%, 100% { transform: rotate(20deg) translateX(-50px); }
+  50% { transform: rotate(15deg) translateX(-55px); }
+}
+
+@keyframes leaf-drop-right {
+  0%, 100% { transform: rotate(-20deg) translateX(50px); }
+  50% { transform: rotate(-15deg) translateX(55px); }
+}
+
+@keyframes tear-drop {
+  0% { transform: translateY(0); opacity: 1; }
+  100% { transform: translateY(40px); opacity: 0; }
+}
+
+@keyframes blink {
+  0%, 40%, 80%, 100% { height: 10px; }
+  20%, 60% { height: 2px; }
+}
+
 /* Responsive Design */
 @media (max-width: 768px) {
   .main-container {

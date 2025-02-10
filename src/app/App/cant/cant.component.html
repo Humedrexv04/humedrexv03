@@ -1,7 +1,5 @@
 <ion-content [fullscreen]="true" class="theme-background">
-
   <div class="main-container">
-
     <br>
     <br>
     <!-- Estado de carga -->
@@ -13,9 +11,34 @@
       </div>
     </div>
 
-    <!-- Contenido principal -->
-    <div *ngIf="!loading" class="content-wrapper">
+    <div *ngIf="!loading && !sensorConnected" class="sensor-error-container">
+      <div class="sensor-error-message">
+        <p class="error-text">No se detectan sensores. Verifica la conexión.</p>
+        <ion-button class="check-sensors-button" (click)="checkSensors()">
+          Revisar sensores
+        </ion-button>
+        <!-- Ilustración de planta triste mejorada -->
+        <div class="sad-plant">
+          <div class="plant">
+            <div class="leaves">
+              <div class="leaf left"></div>
+              <div class="leaf right"></div>
+            </div>
+            <div class="stem"></div>
+            <div class="pot"></div>
+            <div class="face">
+              <div class="eye left"></div>
+              <div class="eye right"></div>
+              <div class="mouth"></div>
+              <div class="tear"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
 
+    <!-- Contenido principal -->
+    <div *ngIf="!loading && sensorConnected" class="content-wrapper">
       <!-- Encabezado -->
       <div class="header-section">
         <h1 class="app-title">HydroMonitor</h1>

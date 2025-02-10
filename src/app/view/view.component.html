@@ -14,30 +14,17 @@
 </ion-content>
 
 <ion-tabs>
-    <ion-tab-bar slot="bottom" class="custom-tab-bar">
-        <!-- Inventario - Izquierda -->
-        <ion-tab-button tab="plant-list" class="inventory-tab">
-            <div class="tab-content">
-                <ion-icon name="leaf" class="tab-icon"></ion-icon>
-                <span class="tab-label">Plantas</span>
-                <div class="plant-counter">{{ plantCount }}</div>
-            </div>
-        </ion-tab-button>
+    <ion-tab tabIcon="md-flame" [root]="tab1"></ion-tab>
+    <ion-tab tabIcon="md-search" [root]="tab2"></ion-tab>
+    <ion-tab tabIcon="md-add" [root]="tab3" class="custom-tab"></ion-tab>
+    <ion-tab tabIcon="md-notifications-outline" [root]="tab4" tabBadge="3"></ion-tab>
+    <ion-tab tabIcon="custom-profile" [root]="tab5"></ion-tab>
+  </ion-tabs>
 
-        <!-- Add - Centro -->
-        <ion-tab-button tab="add" class="add-tab">
-            <div class="tab-content">
-                <ion-icon name="add-circle" class="tab-icon"></ion-icon>
-                <span class="tab-label">Agregar</span>
-            </div>
-        </ion-tab-button>
-
-        <!-- Agua - Derecha -->
-        <ion-tab-button tab="cant" class="water-tab">
-            <div class="tab-content">
-                <ion-icon name="water" class="tab-icon"></ion-icon>
-                <span class="tab-label">Riego</span>
-            </div>
-        </ion-tab-button>
-    </ion-tab-bar>
-</ion-tabs>
+<ion-tabs>
+    <ion-tab tabIcon="md-flame" [root]="tab1"></ion-tab>
+    <ion-tab tabIcon="md-search" [root]="tab2"></ion-tab>
+    <ion-tab tabIcon="md-add" [root]="tab3" class="custom-tab"></ion-tab>
+    <ion-tab tabIcon="md-notifications-outline" [root]="tab4" tabBadge="3"></ion-tab>
+    <ion-tab tabIcon="custom-profile" [root]="tab5"></ion-tab>
+  </ion-tabs>

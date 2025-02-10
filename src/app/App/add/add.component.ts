@@ -5,6 +5,8 @@ import { Plant } from '../../Models/plant.mode';
 import { FormsModule } from '@angular/forms';
 import { IonicModule } from '@ionic/angular';
 import { NgIf } from '@angular/common';
+import { addIcons } from 'ionicons';
+import { thermometer } from 'ionicons/icons';
 
 @Component({
   selector: 'app-add',
@@ -18,7 +20,11 @@ export class AddComponent {
   horario: number = 0;
   humedad: number = 0;
 
-  constructor(private plantService: PlantService, private authService: AuthService) {}
+  constructor(private plantService: PlantService, private authService: AuthService) {
+    addIcons({
+      thermometer
+    });
+  }
 
   ngOnInit() {
     // Aquí puedes inicializar cualquier dato si es necesario

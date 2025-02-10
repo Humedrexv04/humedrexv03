@@ -21,4 +21,9 @@ export class Esp32Service {
     const volumenRef = ref(this.database, `usuarios/${userId}/Volumen`);
     return objectVal(volumenRef) as Observable<number>;
   }
+
+  getSensoresConectados(userId: string): Observable<boolean> {
+    const SensoresConectadosRef= ref(this.database, `usuarios/${userId}/SensoresConectados`);
+    return objectVal(SensoresConectadosRef) as Observable<boolean>;
+  }
 }

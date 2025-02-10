@@ -4,6 +4,8 @@ import { Subscription } from 'rxjs';
 import { Esp32Service } from '../../Services/esp32.service';
 import { IonicModule } from '@ionic/angular';
 import { CommonModule, NgIf } from '@angular/common';
+import { addIcons } from 'ionicons';
+import { refreshOutline, warningOutline } from 'ionicons/icons';
 
 @Component({
   selector: 'app-cant',
@@ -19,13 +21,19 @@ export class CantComponent implements OnInit, OnDestroy {
   scaleMarks = [0, 20, 40, 60, 80, 100];
   isConnected: boolean = true;
   lastUpdate: Date = new Date();
+  sensorConnected: boolean = true; // Inicialmente asumimos que los sensores están conectados
   private subs: Subscription[] = [];
   private updateInterval!: any;
 
   constructor(
     private esp32Service: Esp32Service,
     private auth: Auth
-  ) { }
+  ) { 
+    addIcons({
+      warningOutline,
+      refreshOutline
+    });
+  }
 
   ngOnInit() {
     this.initAuthState();
@@ -47,7 +55,6 @@ export class CantComponent implements OnInit, OnDestroy {
   private handleUnauthenticated() {
     console.error('Usuario no autenticado');
     this.loading = false;
-    // Puedes añadir más lógica de limpieza aquí si es necesario
     this.humedad = null;
     this.volumen = null;
   }
@@ -64,28 +71,46 @@ export class CantComponent implements OnInit, OnDestroy {
       this.esp32Service.getVolumen(this.userId).subscribe({
         next: (valor) => this.handleVolumenData(valor),
         error: (err) => this.handleVolumenError(err)
+      }),
+
+      this.esp32Service.getSensoresConectados(this.userId).subscribe({
+        next: (conectados) => {
+          this.sensorConnected = conectados;
+          this.loading = false; // Detener carga después de verificar conexión
+        },
+        error: (err) => {
+          console.error('Error al obtener estado de sensores:', err);
+          this.sensorConnected = false; // Asumimos que no están conectados si hay un error
+          this.loading = false; // Detener carga en caso de error
+        }
       })
     );
   }
 
   private handleHumedadData(valor: number) {
-    this.humedad = Math.min(Math.max(valor, 0), 100);
+    if (valor === null || valor < 0 || valor > 100) {
+      this.sensorConnected = false; // Sensor de humedad no conectado
+      this.humedad = null;
+    } else {
+      this.humedad = Math.min(Math.max(valor, 0), 100);
+    }
     this.checkLoadingStatus();
   }
 
   private convertToPercentage(volume: number): number {
     const MAX_VOLUME = 3300; // Nuevo máximo
-    // Invertimos la relación: valor más bajo = porcentaje más alto
     const percentage = ((MAX_VOLUME - volume) / MAX_VOLUME) * 100;
-
-    // Aseguramos que el porcentaje esté entre 0% y 100%
     return Math.min(Math.max(percentage, 0), 100);
   }
 
   private handleVolumenData(valor: number) {
-    // Aplicamos límites al valor recibido (0-3300)
-    const clampedValue = Math.min(Math.max(valor, 0), 3300);
-    this.volumen = this.convertToPercentage(clampedValue);
+    if (valor === null || valor < 0 || valor > 3300) {
+      this.sensorConnected = false; // Sensor de volumen no conectado
+      this.volumen = null;
+    } else {
+      const clampedValue = Math.min(Math.max(valor, 0), 3300);
+      this.volumen = this.convertToPercentage(clampedValue);
+    }
     this.checkLoadingStatus();
   }
 
@@ -137,6 +162,7 @@ export class CantComponent implements OnInit, OnDestroy {
     console.error('Error en humedad:', err);
     this.isConnected = false;
     this.humedad = null;
+    this.loading = false; // Detener carga en caso de error
     this.checkLoadingStatus();
   }
 
@@ -144,7 +170,35 @@ export class CantComponent implements OnInit, OnDestroy {
     console.error('Error en volumen:', err);
     this.isConnected = false;
     this.volumen = null;
+    this.loading = false; // Detener carga en caso de error
     this.checkLoadingStatus();
+  }
+
+  // Método para verificar manualmente los sensores
+  checkSensors() {
+    this.loading = true; // Mostrar estado de carga
+    this.sensorConnected = false; // Reiniciar estado de conexión
+    this.humedad = null; // Reiniciar valores
+    this.volumen = null;
+
+    if (this.userId) {
+      this.subs.push(
+        this.esp32Service.getSensoresConectados(this.userId).subscribe({
+          next: (conectados) => {
+            this.sensorConnected = conectados;
+            this.loadSensorData(); // Volver a cargar los datos de los sensores
+          },
+          error: (err) => {
+            console.error('Error al verificar sensores:', err);
+            this.sensorConnected = false;
+            this.loading = false; // Detener carga en caso de error
+          }
+        })
+      );
+    } else {
+      console.error('Usuario no autenticado');
+      this.loading = false;
+    }
   }
 
   ngOnDestroy() {

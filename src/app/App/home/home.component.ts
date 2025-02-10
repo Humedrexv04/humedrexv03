@@ -2,6 +2,8 @@ import { Component, OnInit, inject } from '@angular/core';
 import { AuthService } from '../../Services/auth.service';
 import { IonicModule } from '@ionic/angular';
 import { Router } from '@angular/router';
+import { addIcons } from 'ionicons';
+import { sunny } from 'ionicons/icons';
 
 @Component({
   selector: 'app-home',
@@ -12,7 +14,11 @@ import { Router } from '@angular/router';
 export class HomeComponent implements OnInit {
   route = inject(Router);
   isDarkTheme = false;
-  constructor(private authService: AuthService) { }
+  constructor(private authService: AuthService) { 
+    addIcons({
+      sunny
+    });
+  }
 
 
 
