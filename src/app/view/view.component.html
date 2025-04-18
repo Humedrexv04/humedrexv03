@@ -4,7 +4,7 @@
             <ion-icon name="person-circle" slot="icon-only"></ion-icon>
         </ion-button>
         <div class="header-title-container">
-            <ion-title class="header-title">🌿 Mi Jardín</ion-title>
+            <ion-title class="header-title">MI JARDÍN</ion-title>
         </div>
     </ion-toolbar>
 </ion-header>
@@ -14,17 +14,24 @@
 </ion-content>
 
 <ion-tabs>
-    <ion-tab tabIcon="md-flame" [root]="tab1"></ion-tab>
-    <ion-tab tabIcon="md-search" [root]="tab2"></ion-tab>
-    <ion-tab tabIcon="md-add" [root]="tab3" class="custom-tab"></ion-tab>
-    <ion-tab tabIcon="md-notifications-outline" [root]="tab4" tabBadge="3"></ion-tab>
-    <ion-tab tabIcon="custom-profile" [root]="tab5"></ion-tab>
-  </ion-tabs>
+    <ion-tab-bar slot="bottom" class="custom-tab-bar">
+        <!-- Inventario - Izquierda -->
+        <ion-tab-button tab="plant-list" class="inventory-tab" id="tab-button-plant-list">
+            <ion-icon name="leaf" class="tab-icon"></ion-icon>
+            <span class="tab-label">Plantas</span>
+            <div class="plant-counter">{{ plantCount }}</div>
+        </ion-tab-button>
 
-<ion-tabs>
-    <ion-tab tabIcon="md-flame" [root]="tab1"></ion-tab>
-    <ion-tab tabIcon="md-search" [root]="tab2"></ion-tab>
-    <ion-tab tabIcon="md-add" [root]="tab3" class="custom-tab"></ion-tab>
-    <ion-tab tabIcon="md-notifications-outline" [root]="tab4" tabBadge="3"></ion-tab>
-    <ion-tab tabIcon="custom-profile" [root]="tab5"></ion-tab>
-  </ion-tabs>
+        <!-- Add - Centro -->
+        <ion-tab-button tab="add" class="add-tab" id="tab-button-add">
+            <ion-icon name="add-circle" class="tab-icon"></ion-icon>
+            <span class="tab-label">Agregar</span>
+        </ion-tab-button>
+
+        <!-- Agua - Derecha -->
+        <ion-tab-button tab="cant" class="water-tab" id="tab-button-water">
+            <ion-icon name="water" class="tab-icon"></ion-icon>
+            <span class="tab-label">Riego</span>
+        </ion-tab-button>
+    </ion-tab-bar>
+</ion-tabs>

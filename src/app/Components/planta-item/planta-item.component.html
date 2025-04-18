@@ -1,8 +1,9 @@
-<ion-card (click)="viewPlantDetails()" class="plant-card">
-  <ion-card-header>
-    <ion-card-title>{{ plant.name }}</ion-card-title>
-  </ion-card-header>
-  <ion-card-content>
+<ion-card class="card">
+  <div class="image">
     <img [src]="plant.img" alt="{{ plant.name }}" class="plant-image" />
-  </ion-card-content>
+  </div>
+  <ion-card-header>
+    <ion-card-title class="plantTitle">{{ plant.name }}</ion-card-title>
+  </ion-card-header>
+  <ion-button class="ver-detalles" (click)="viewPlantDetails()">VER DETALLES</ion-button>
 </ion-card>

@@ -1,0 +1,163 @@
+.login-card {
+  width: 300px;
+  /* Ancho ajustado */
+  background-color: #c7c7c7a6;
+  /* Fondo blanco */
+  border-radius: 25px;
+  /* Bordes redondeados */
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  /* Sombra suave */
+  margin: auto;
+  /* Centrar horizontalmente */
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 20px;
+  position: absolute;
+  /* Centrar verticalmente */
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.floating-title {
+  position: absolute;
+  top: 20%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  color: white;
+  font-size: 5rem; /* Tamaño aumentado */
+  text-shadow: 0 3px 6px rgba(0, 0, 0, 0.4); /* Sombra más pronunciada */
+  z-index: 1;
+  letter-spacing: 3px;
+  font-family: Impact;
+  animation: float 3s ease-in-out infinite;
+  margin-bottom: 40px;
+}
+
+@keyframes float {
+  0%, 100% {
+    transform: translate(-50%, -50%) translateY(0) scale(1);
+  }
+  50% {
+    transform: translate(-50%, -50%) translateY(-15px) scale(1.02);
+  }
+}
+
+.instruction-text {
+  color: #666666;
+  /* Color de texto gris */
+  text-align: center;
+  font-size: 20px;
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+
+/* Estilos para los botones principales */
+ion-button {
+  width: 100%;
+  margin-top: 15px;
+  min-height: 75px; /* Altura aumentada */
+  border-radius: 25px;
+  /* Bordes redondeados */
+  font-weight: bold;
+  font-size: 24px;
+  font-family: sans-serif;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  /* Animación de escala y sombra */
+}
+
+/* Botón de inicio de sesión normal */
+ion-button {
+  --background: #2e861d;
+  /* Verde */
+  --color: #ffffff;
+  /* Blanco */
+  --border-radius: 55px;
+  --border-width: 2px;
+  --border-color: transparent;
+}
+
+/* Animación de escala al hacer hover */
+ion-button:hover {
+  transform: scale(1.05);
+  /* Escala el botón al 105% */
+  box-shadow: 0 6px 15px rgba(0, 0, 0, 0.2);
+  /* Sombra más pronunciada */
+}
+
+/* Botón de creación de cuenta */
+ion-button[fill="outline"] {
+  --background: transparent;
+  --color: #4caf50;
+  /* Verde */
+  --border-color: #4caf50;
+}
+
+/* Animación de escala al hacer hover en el botón outline */
+ion-button[fill="outline"]:hover {
+  transform: scale(1.05);
+  /* Escala el botón al 105% */
+  box-shadow: 0 6px 15px rgba(0, 0, 0, 0.2);
+  /* Sombra más pronunciada */
+}
+
+.container {
+  position: relative;
+  height: 100%;
+  overflow: hidden;
+  font-size: large;
+  color: white;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.animated-waves {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 0;
+  overflow: hidden;
+}
+
+.wave-background {
+  width: 110%;
+  height: 110%;
+  object-fit: cover;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  animation: waveAnim 12s ease-in-out infinite;
+  filter: hue-rotate(5deg);
+}
+
+.wave-overlay {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(45deg, rgba(44, 115, 78, 0.15) 0%, rgba(255,255,255,0.1) 100%);
+  animation: overlayWave 8s linear infinite;
+}
+
+@keyframes waveAnim {
+  0%, 100% {
+    transform: translate(-50%, -50%) scale(1) rotate(0deg);
+  }
+  25% {
+    transform: translate(-50%, -48%) scale(1.02) rotate(0.5deg);
+  }
+  50% {
+    transform: translate(-50%, -50%) scale(1) rotate(-0.5deg);
+  }
+  75% {
+    transform: translate(-50%, -52%) scale(1.02) rotate(0.5deg);
+  }
+}
+
+

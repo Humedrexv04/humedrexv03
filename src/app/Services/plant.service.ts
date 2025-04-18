@@ -2,12 +2,15 @@ import { Injectable, inject } from '@angular/core';
 import { Firestore, collection, addDoc, updateDoc, deleteDoc, doc, collectionData, getDoc, getDocs } from '@angular/fire/firestore';
 import { Observable } from 'rxjs';
 import { Plant } from '../Models/plant.mode';
+import { Esp32Service } from './esp32.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class PlantService {
   private _firestore = inject(Firestore);
+  private esp32Service = inject(Esp32Service); // Inyectar el servicio de ESP32
+
 
   constructor() { }
 
@@ -17,15 +20,31 @@ export class PlantService {
     return collectionData(plantsCollection, { idField: 'id' }) as Observable<Plant[]>; // Agregar el id al objeto
   }
 
-  // Agregar una nueva planta
-  addPlant(userId: string, plant: Plant): Promise<void> {
+  async getUserPlants(userId: string): Promise<Plant[]> {
     const plantsCollection = collection(this._firestore, `users/${userId}/plants`);
-    return addDoc(plantsCollection, plant)
-      .then(() => console.log('Planta agregada:', plant))
-      .catch(error => {
-        console.error('Error al agregar la planta:', error);
-        throw error; // Propagar el error para manejarlo en el componente
-      });
+    const querySnapshot = await getDocs(plantsCollection);
+
+    return querySnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() } as Plant));
+  }
+
+
+
+  async addPlant(userId: string, plant: any): Promise<void> {
+    const plantsCollection = collection(this._firestore, `users/${userId}/plants`);
+
+    try {
+      // 🔹 Agregar la planta sin sensores ni electroválvulas
+      const newPlant: Plant = {
+        ...plant // Solo se agregan las propiedades de `plant`
+      };
+
+      const plantDocRef = await addDoc(plantsCollection, newPlant);
+
+      console.log(`✅ Planta agregada con ID ${plantDocRef.id}`);
+    } catch (error) {
+      console.error('❌ Error al agregar la planta:', error);
+      throw error;
+    }
   }
 
   // Actualizar una planta
@@ -52,21 +71,21 @@ export class PlantService {
   }
 
   // Obtener detalles de una planta específica
-  getPlantDetails(userId: string, plantId: string): Promise<Plant> {
-    const plantDoc = doc(this._firestore, `users/${userId}/plants/${plantId}`);
-    return getDoc(plantDoc)
-      .then(docSnapshot => {
-        if (docSnapshot.exists()) {
-          const plantData = docSnapshot.data() as Plant; // Asegúrate de que la estructura coincida con tu modelo
-          return { id: docSnapshot.id, ...plantData }; // Retornar el id junto con los datos de la planta
-        } else {
-          throw new Error('Planta no encontrada');
-        }
-      })
-      .catch(error => {
-        console.error('Error al obtener los detalles de la planta:', error);
-        throw error; // Propagar el error para manejarlo en el componente
-      });
+  async getPlantDetails(userId: string, plantId: string): Promise<Plant> {
+    const plantsCollection = collection(this._firestore, `users/${userId}/plants`);
+    const plantDocRef = doc(plantsCollection, plantId);
+    const plantDoc = await getDoc(plantDocRef);
+    if (plantDoc.exists()) {
+      const plantData = plantDoc.data() as Plant;
+      // Verificar si la propiedad sensorHumedad existe
+      if (!plantData.sensorHumedad) {
+        console.log('La propiedad sensorHumedad no existe en la base de datos');
+      }
+      return plantData;
+    } else {
+      console.log('La planta no existe en la base de datos');
+      throw new Error('La planta no existe en la base de datos');
+    }
   }
 
   // Función para contar plantas del usuario
@@ -77,7 +96,7 @@ export class PlantService {
         const count = querySnapshot.size;
         console.log(`Total de plantas: ${count}`);
         return count;
-      })
+      })  
       .catch(error => {
         console.error('Error al contar plantas:', error);
         throw error;

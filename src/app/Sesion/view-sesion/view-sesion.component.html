@@ -1,0 +1,23 @@
+<ion-content class="ion-padding">
+  <div class="container">
+    <!-- Fondo con imagen y efecto de olas -->
+    <div class="animated-waves">
+      <img src="https://i.pinimg.com/736x/aa/02/24/aa02246aaf88c873feed936b5d10d677.jpg" 
+           alt="Fondo floral" 
+           class="wave-background">
+      <div class="wave-overlay"></div>
+    </div>
+
+    <!-- Título fuera del card -->
+    <h1 class="floating-title">HUMEDREX</h1>
+
+    <!-- Tarjeta de login transparente -->
+    <div class="login-card">
+      <ion-button expand="full" class="ion-margin-top" shape="round" (click)="gotoLogIn()">Iniciar Sesión</ion-button>
+      <div class="instruction-text">¿No tienes cuenta?</div>
+      <ion-button expand="full" fill="outline" class="ion-margin-top" shape="round" (click)="gotoRegister()">
+        Crear Cuenta
+      </ion-button>
+    </div>
+  </div>
+</ion-content>

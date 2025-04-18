@@ -1,4 +1,3 @@
-<!-- perfil.html -->
 <ion-header>
   <ion-toolbar>
     <ion-title>Mi Perfil</ion-title>
@@ -8,17 +7,33 @@
 <ion-content padding>
   <h2>Bienvenido a la aplicación</h2>
 
-  <!-- Botón de cambio de tema -->
-  <ion-item lines="none" class="theme-toggle-item">
-    <ion-icon slot="start" [name]="isDarkTheme ? 'moon' : 'sunny'" color="warning" class="theme-icon">
-    </ion-icon>
-    <ion-label>Modo {{ isDarkTheme ? 'Oscuro' : 'Claro' }}</ion-label>
-    <ion-toggle [checked]="isDarkTheme" (ionChange)="toggleTheme()" color="success" class="theme-toggle">
-    </ion-toggle>
-  </ion-item>
+  <!-- Tarjeta de perfil -->
+  <ion-card class="card">
+    <!-- Imagen de fondo de la tarjeta -->
+    <div class="card__img">
+      <div class="card__avatar">
+        <!-- Ícono de perfil -->
+        <ion-icon name="person-circle-outline" class="profile-icon"></ion-icon>
+      </div>
+    </div>
 
-  <!-- Botón de cerrar sesión -->
-  <ion-button expand="full" color="danger" (click)="logout()" class="logout-button">
-    Cerrar Sesión
-  </ion-button>
+    <!-- Información del usuario -->
+    <ion-card-header>
+      <ion-card-title class="card__title">{{ user.name }}</ion-card-title>
+      <ion-card-subtitle class="card__subtitle">{{ user.email }}</ion-card-subtitle>
+    </ion-card-header>
+
+    <!-- Detalles adicionales -->
+    <ion-card-content>
+      <ion-item lines="none">
+        <ion-icon name="leaf-outline" slot="start" color="success"></ion-icon>
+        <ion-label>Plantas en inventario: {{ user.plantCount }}</ion-label>
+      </ion-item>
+
+      <!-- Botón de cerrar sesión -->
+      <ion-button expand="full" color="danger" (click)="logout()" class="logout-button">
+        Cerrar Sesión
+      </ion-button>
+    </ion-card-content>
+  </ion-card>
 </ion-content>

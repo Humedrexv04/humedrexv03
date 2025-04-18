@@ -1,5 +1,9 @@
 import { Injectable, inject } from '@angular/core';
-import { Auth, GoogleAuthProvider, User, createUserWithEmailAndPassword, onAuthStateChanged, signInWithEmailAndPassword, signInWithPopup } from '@angular/fire/auth';
+import {
+    Auth, GoogleAuthProvider, User, createUserWithEmailAndPassword, fetchSignInMethodsForEmail, onAuthStateChanged,
+    sendPasswordResetEmail,
+    signInWithEmailAndPassword, signInWithPopup
+} from '@angular/fire/auth';
 import { Firestore, doc, setDoc, getDoc } from '@angular/fire/firestore';
 import { BehaviorSubject } from 'rxjs';
 
@@ -33,7 +37,7 @@ export class AuthService {
         return createUserWithEmailAndPassword(this._auth, email, password)
             .then((userCredential) => {
                 const userId = userCredential.user.uid;
-                return this.saveUser (userId, email, name);
+                return this.saveUser(userId, email, name);
             })
             .then(() => {
                 console.log('Usuario registrado y guardado en Firestore:', email);
@@ -45,7 +49,7 @@ export class AuthService {
     }
 
     // Guardar el usuario en Firestore
-    private saveUser (userId: string, email: string, name: string): Promise<void> {
+    private saveUser(userId: string, email: string, name: string): Promise<void> {
         const userDoc = doc(this._firestore, `users/${userId}`);
         return getDoc(userDoc).then(docSnapshot => {
             if (docSnapshot.exists()) {
@@ -86,7 +90,7 @@ export class AuthService {
                 // Verificar que el email no sea null
                 if (email) {
                     // Guardar el usuario en Firestore
-                    return this.saveUser (user.uid, email, name);
+                    return this.saveUser(user.uid, email, name);
                 } else {
                     throw new Error('El email del usuario es null');
                 }
@@ -95,7 +99,12 @@ export class AuthService {
                 console.log('Usuario logueado con Google y guardado en Firestore');
             })
             .catch(error => {
-                console.error('Error al iniciar sesión con Google:', error);
+                if (error.code === 'auth/popup-closed-by-user') {
+                    console.warn('El usuario cerró la ventana emergente de inicio de sesión.');
+                    // Aquí puedes mostrar un mensaje al usuario si lo deseas
+                } else {
+                    console.error('Error al iniciar sesión con Google:', error);
+                }
                 throw error; // Propagar el error
             });
     }
@@ -112,8 +121,10 @@ export class AuthService {
             });
     }
 
+
+
     // Obtener el usuario actual
-    getCurrentUser (): Promise<User | null> {
+    getCurrentUser(): Promise<User | null> {
         return new Promise((resolve, reject) => {
             onAuthStateChanged(this._auth, (user) => {
                 if (user) {
@@ -123,5 +134,46 @@ export class AuthService {
                 }
             });
         });
+    }
+
+    // Método para enviar correo de restablecimiento
+    async sendPasswordReset(email: string): Promise<void> {
+        try {
+            // Verificar si el correo electrónico está registrado
+            const signInMethods = await fetchSignInMethodsForEmail(this._auth, email);
+
+            if (signInMethods.length > 0) {
+                throw new Error('El correo no está registrado.'); // El correo no está asociado a ninguna cuenta
+            }
+
+            // Enviar el correo de restablecimiento
+            await sendPasswordResetEmail(this._auth, email);
+            console.log('Correo de restablecimiento enviado a:', email);
+        } catch (error: any) {
+            console.error('Error en sendPasswordReset:', error);
+
+            // Manejar errores específicos
+            if (error.message === 'El correo no está registrado.') {
+                throw error; // Propagar el error si el correo no está registrado
+            } else {
+                throw new Error('Error al enviar el correo. Inténtalo de nuevo más tarde.'); // Error genérico
+            }
+        }
+    }
+
+    // Método para obtener los datos del usuario desde Firestore
+    async getUserData(userId: string): Promise<{ name: string; email: string }> {
+        const userDoc = doc(this._firestore, `users/${userId}`);
+        const docSnapshot = await getDoc(userDoc);
+
+        if (docSnapshot.exists()) {
+            const data = docSnapshot.data();
+            return {
+                name: data['name'] || 'Usuario',
+                email: data['email'] || 'Sin email registrado'
+            };
+        } else {
+            throw new Error('Usuario no encontrado en Firestore');
+        }
     }
 }

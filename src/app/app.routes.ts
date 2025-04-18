@@ -5,8 +5,16 @@ import { ViewComponent } from './view/view.component';
 
 export const routes: Routes = [
     {
+        path:'viewSesion',
+        loadComponent: () => import('../app/Sesion/view-sesion/view-sesion.component').then(m => m.ViewSesionComponent),
+    },
+    {
         path: 'login',
         loadComponent: () => import('../app/Sesion/login/login.component').then(m => m.LoginComponent),
+    },
+    {
+        path: 'reset-password',
+        loadComponent: () => import('../app/Sesion/reset-password/reset-password.component').then(m => m.ResetPasswordComponent),
     },
     {
         path: 'register',
@@ -32,15 +40,20 @@ export const routes: Routes = [
                 path: 'plant-list',
                 loadComponent: () => import('./App/inventario/plant-list/plant-list.component').then(m => m.PlantListComponent)
             },
-            {
-                path: 'plant/:id',
-                loadComponent: () => import('./App/inventario/plant-detail/plant-detail.component').then(m => m.PlantDetailComponent)
-            },
+            
         ]
     },
     {
+        path: 'plant/:id',
+        loadComponent: () => import('./App/inventario/plant-detail/plant-detail.component').then(m => m.PlantDetailComponent)
+    },
+    {
+        path: 'edit-plant/:id',
+        loadComponent: () => import('./App/inventario/edit-plant/edit-plant.component').then(m => m.EditPlantComponent)
+    },
+    {
         path: '**',
-        redirectTo: '/login',
+        redirectTo: '/viewSesion',
         pathMatch: 'full'
     },
 ];

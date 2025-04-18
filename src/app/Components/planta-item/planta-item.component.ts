@@ -18,7 +18,7 @@ export class PlantaItemComponent {
   // Método para redirigir a la página de detalles de la planta
   viewPlantDetails() {
     if (this.plant.id) {
-      this.router.navigate(['/view/plant', this.plant.id]); // Redirige a la página de detalles
+      this.router.navigate(['/plant', this.plant.id]); // Redirige a la página de detalles
     }
   }
 }

@@ -1,6 +1,5 @@
 import { Injectable, inject } from '@angular/core';
 import { Database, objectVal, ref } from '@angular/fire/database';
-import { Auth } from '@angular/fire/auth';
 import { Observable } from 'rxjs';
 
 @Injectable({
@@ -8,22 +7,28 @@ import { Observable } from 'rxjs';
 })
 export class Esp32Service {
   private database = inject(Database);
-  private auth = inject(Auth);
 
-  // Obtener humedad en tiempo real
-  getHumedad(userId: string): Observable<number> {
-    const humedadRef = ref(this.database, `usuarios/${userId}/Humedad`);
+  // Método para obtener todos los datos de los sensores desde /test
+  getTestSensorData(): Observable<any> {
+    const testRef = ref(this.database, 'test');
+    return objectVal(testRef) as Observable<any>;
+  }
+
+  // Método para obtener la distancia
+  getDistancia(): Observable<number> {
+    const distanciaRef = ref(this.database, 'test/Distancia');
+    return objectVal(distanciaRef) as Observable<number>;
+  }
+
+  // Método para obtener el estado de las electrovalvulas
+  getElectrovalvula(valvulaNumber: 1 | 2 | 3): Observable<boolean> {
+    const valvulaRef = ref(this.database, `test/Electrovalvula${valvulaNumber}`);
+    return objectVal(valvulaRef) as Observable<boolean>;
+  }
+
+  // Método para obtener la humedad de los sensores
+  getHumedadSensor(sensorNumber: 1 | 2 | 3): Observable<number> {
+    const humedadRef = ref(this.database, `test/Humedad${sensorNumber}`);
     return objectVal(humedadRef) as Observable<number>;
-  }
-
-  // Obtener volumen en tiempo real
-  getVolumen(userId: string): Observable<number> {
-    const volumenRef = ref(this.database, `usuarios/${userId}/Volumen`);
-    return objectVal(volumenRef) as Observable<number>;
-  }
-
-  getSensoresConectados(userId: string): Observable<boolean> {
-    const SensoresConectadosRef= ref(this.database, `usuarios/${userId}/SensoresConectados`);
-    return objectVal(SensoresConectadosRef) as Observable<boolean>;
   }
 }

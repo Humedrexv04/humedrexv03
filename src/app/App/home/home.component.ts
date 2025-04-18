@@ -3,7 +3,7 @@ import { AuthService } from '../../Services/auth.service';
 import { IonicModule } from '@ionic/angular';
 import { Router } from '@angular/router';
 import { addIcons } from 'ionicons';
-import { sunny } from 'ionicons/icons';
+import { leafOutline, moon, personCircleOutline, sunny } from 'ionicons/icons';
 
 @Component({
   selector: 'app-home',
@@ -13,43 +13,51 @@ import { sunny } from 'ionicons/icons';
 })
 export class HomeComponent implements OnInit {
   route = inject(Router);
-  isDarkTheme = false;
-  constructor(private authService: AuthService) { 
+
+  // Datos del usuario
+  user = {
+    userId: '',
+    name: '',
+    email: '',
+    plantCount: 0 // Puedes agregar lógica para obtener este dato si es necesario
+  };
+
+  constructor(private authService: AuthService) {
     addIcons({
-      sunny
+      sunny,
+      moon,
+      personCircleOutline,
+      leafOutline
     });
   }
 
+  async ngOnInit() {
+    // Cargar datos del usuario
+    try {
+      const currentUser = await this.authService.getCurrentUser();
+      if (currentUser) {
+        this.user.userId = currentUser.uid;
+        this.user.email = currentUser.email || 'Sin email registrado';
 
-
-  ngOnInit() {
-    // Aquí puedes realizar cualquier inicialización necesaria
-    console.log('Componente Home inicializado');
-    const savedTheme = localStorage.getItem('theme');
-    const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-
-    if (savedTheme) {
-      document.body.classList.toggle('dark-theme', savedTheme === 'dark');
-    } else {
-      document.body.classList.toggle('dark-theme', prefersDark);
+        // Obtener el nombre de usuario desde Firestore
+        const userData = await this.authService.getUserData(currentUser.uid);
+        this.user.name = userData.name;
+      } else {
+        console.warn('No hay usuario autenticado.');
+      }
+    } catch (error) {
+      console.error('Error cargando datos del usuario:', error);
     }
+
   }
 
-
-  toggleTheme() {
-    const isDark = document.body.classList.toggle('dark-theme');
-    localStorage.setItem('theme', isDark ? 'dark' : 'light');
-  }
-
-  logout() {
-    this.authService.logout()
-      .then(() => {
-        this.route.navigate(['/login']);
-        console.log('Cierre de sesión exitoso');
-        // Aquí puedes redirigir al usuario a la página de inicio de sesión o a otra página
-      })
-      .catch(error => {
-        console.error('Error al cerrar sesión:', error);
-      });
+  async logout() {
+    try {
+      await this.authService.logout();
+      this.route.navigate(['/login']);
+      console.log('Cierre de sesión exitoso');
+    } catch (error) {
+      console.error('Error al cerrar sesión:', error);
+    }
   }
 }
