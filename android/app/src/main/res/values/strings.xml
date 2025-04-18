@@ -1,0 +1,7 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="app_name">humedrex</string>
+    <string name="title_activity_main">humedrex</string>
+    <string name="package_name">com.humedrex.com</string>
+    <string name="custom_url_scheme">com.humedrex.com</string>
+</resources>
